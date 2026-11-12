@@ -4,7 +4,7 @@ SUMMARY = "This receipe compiles the westeros compositor gstreamer sink element"
 
 LICENSE = "LGPLv2.1"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 SRC_URI = "${WESTEROS_SINK_URI}"
 SRCREV_FORMAT = "westeros-sink"
@@ -13,7 +13,7 @@ SRCREV_FORMAT = "westeros-sink"
 #LIC_FILES_CHKSUM = "file://${LICENSE_LOCATION};md5=8fb65319802b0c15fc9e0835350ffa02"
 LIC_FILES_CHKSUM = "file://COPYING.LGPL;md5=683c7039c56b9e142f0779236233a953"
 
-PSEUDO_IGNORE_PATHS .= ",${WORKDIR}/git"
+PSEUDO_IGNORE_PATHS .= ",${UNPACKDIR}/git"
 
 inherit autotools pkgconfig
 
@@ -35,10 +35,9 @@ export  SWDECODER_ENABLED = "${@bb.utils.contains('DISTRO_FEATURES','westeros_si
 do_install:append () {
     if [ "${SWDECODER_ENABLED}" = "y" ]; then
         install -d ${D}${sysconfdir}/default
-        install -m 0644 ${WORKDIR}/essrmgr.conf ${D}${sysconfdir}/default
+        install -m 0644 ${UNPACKDIR}/essrmgr.conf ${D}${sysconfdir}/default
     fi
 }
 
 FILES:${PN}:append = " ${sysconfdir}/default/essrmgr.conf"
-
 
