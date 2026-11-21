@@ -2,9 +2,7 @@ include recipes-graphics/westeros/westeros.inc
 
 SUMMARY = "This receipe compiles the westeros compositor gstreamer sink element"
 
-LICENSE = "LGPLv2.1"
-
-S = "${UNPACKDIR}/git"
+LICENSE = "LGPL-2.1-only"
 
 SRC_URI = "${WESTEROS_SINK_URI}"
 SRCREV_FORMAT = "westeros-sink"
@@ -25,7 +23,8 @@ CFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'window_mode_1080p', " -DMODE
 DEPENDS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'westeros_sink_software_decode', ' libav', '', d)}"
 CFLAGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'westeros_sink_software_decode', ' -DENABLE_SW_DECODE', '', d)}"
 LDFLAGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'westeros_sink_software_decode', ' -lavcodec -lavutil', '', d)}"
-SRC_URI += "file://0001-westeros-sink-1080p.patch;patchdir=."
+SRC_URI += "file://0001-westeros-sink-1080p.patch;patchdir=. \
+            file://0002-westeros-sink-use-unsigned-ioctl-requests.patch;patchdir=."
 
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'gstreamer1', 'gstreamer1.0-plugins-base', '', d)}"
 SRC_URI += "${@bb.utils.contains('DISTRO_FEATURES', 'westeros_sink_software_decode', ' file://essrmgr.conf ',' ',d)}"

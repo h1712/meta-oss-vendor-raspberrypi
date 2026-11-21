@@ -1,3 +1,3 @@
-#Original license mentioned in openembedded cairo 1.16 base recipe "LICENSE:${PN}-gobject = "MPL-1.1 | LGPLv2.1" is not getting applied for multilib
+# Original license override for cairo-gobject must use BPN for multilib.
 #This can be corrected by replacing ${PN} with ${BPN} without modifying the license
-LICENSE:${BPN}-gobject = "MPL-1.1 | LGPLv2.1"
+LICENSE:${MLPREFIX}${BPN}-gobject = "MPL-1.1 | LGPL-2.1-only"

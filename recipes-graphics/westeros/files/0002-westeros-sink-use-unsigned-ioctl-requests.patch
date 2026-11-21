@@ -1,0 +1,40 @@
+From: Yocto Wrynose migration
+Subject: [PATCH] westeros-sink: use unsigned type for V4L2 ioctl requests
+
+V4L2 ioctl request codes are unsigned. Keep their full values when matching
+the request codes in the C++-compiled debug wrapper.
+
+Upstream-Status: Pending
+
+---
+ v4l2/westeros-sink-soc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/v4l2/westeros-sink-soc.c b/v4l2/westeros-sink-soc.c
+--- a/v4l2/westeros-sink-soc.c
++++ b/v4l2/westeros-sink-soc.c
+@@ -216,6 +216,6 @@ static gpointer wstDispatchThread(gpointer data);
+ static void postErrorMessage( GstWesterosSink *sink, int errorCode, const char *errorText, const char *description );
+ static GstFlowReturn prerollSinkSoc(GstBaseSink *base_sink, GstBuffer *buffer);
+-static int ioctl_wrapper( int fd, int request, void* arg );
++static int ioctl_wrapper( int fd, unsigned int request, void* arg );
+ #ifdef USE_GENERIC_AVSYNC
+ static void wstPruneAVSyncFiles( GstWesterosSink *sink );
+ static AVSyncCtx* wstCreateAVSyncCtx( GstWesterosSink *sink );
+@@ -8383,7 +8383,7 @@ static void sinkReleaseResources( GstWesterosSink *sink )
+    sinkReleaseVideo( sink );
+ }
+ 
+-static int ioctl_wrapper( int fd, int request, void* arg )
++static int ioctl_wrapper( int fd, unsigned int request, void* arg )
+ {
+    const char *req= 0;
+    int rc;
+@@ -8429,6 +8429,6 @@ static int ioctl_wrapper( int fd, unsigned int request, void* arg )
+       }
+       g_print("westerossink-ioctl: ioct( %d, %x ( %s ) )\n", fd, request, req );
+-      if ( request == (int)VIDIOC_S_FMT )
++      if ( request == VIDIOC_S_FMT )
+       {
+          struct v4l2_format *format= (struct v4l2_format*)arg;
+          g_print("westerossink-ioctl: : type %d\n", format->type);
