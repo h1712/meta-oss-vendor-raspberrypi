@@ -1,0 +1,21 @@
+From: Wrynose migration
+Subject: [PATCH] hciattach: use /lib/firmware for BCM43xx firmware
+
+The FIRMWARE_DIR definition is in hciattach_bcm43xx.c in BlueZ 5.48.
+Use the system firmware directory instead of the obsolete /etc/firmware.
+
+Upstream-Status: Inappropriate [Raspberry Pi firmware path]
+
+---
+ tools/hciattach_bcm43xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/hciattach_bcm43xx.c b/tools/hciattach_bcm43xx.c
+index 5d54fc2..ae6304b 100644
+--- a/tools/hciattach_bcm43xx.c
++++ b/tools/hciattach_bcm43xx.c
+@@ -46 +46 @@
+-#define FIRMWARE_DIR "/etc/firmware"
++#define FIRMWARE_DIR "/lib/firmware"
+--
+2.34.1
